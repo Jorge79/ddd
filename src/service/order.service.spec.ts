@@ -20,7 +20,7 @@ describe("Order service unit tests", () => {
     const customer = new Customer("c1", "Customer1")
     const item1 = new OrderItem("i1", "item1", 10, "p1", 1)
 
-    const order = OrderService.placeholder(customer, [item1])
+    const order = OrderService.placeOrder(customer, [item1])
 
     expect(customer.rewardPoints).toBe(5)
     expect(order.total()).toBe(10)
