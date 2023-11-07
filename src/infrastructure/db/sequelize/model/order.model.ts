@@ -4,12 +4,14 @@ import {
   PrimaryKey,
   Column,
   ForeignKey,
-  BelongsTo
+  BelongsTo,
+  HasMany,
 } from "sequelize-typescript";
+import OrderItemModel from "./order-item.model";
 import CustomerModel from "./customer.model";
 
 @Table({
-  tableName: "order",
+  tableName: "orders",
   timestamps: false,
 })
 export default class OrderModel extends Model {
@@ -22,8 +24,11 @@ export default class OrderModel extends Model {
   declare customer_id: string;
 
   @BelongsTo(() => CustomerModel)
-  declare customer: CustomerModel
+  declare customer: CustomerModel;
+
+  @HasMany(() => OrderItemModel)
+  declare items: OrderItemModel[];
 
   @Column({ allowNull: false })
-  declare total: number
+  declare total: number;
 }
