@@ -34,6 +34,18 @@ export default class OrderItem {
     return this._productId
   }
 
+  changeName(name: string) {
+    this._name = name
+  }
+
+  changePrice(price: number) {
+    this._price = price
+  }
+
+  changeQuantity(price: number) {
+    this._quantity = this.quantity
+  }
+
   orderItemTotal(): number {
     return this._price * this._quantity;
   }
