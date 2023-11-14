@@ -42,18 +42,19 @@ export default class OrderRepository {
     );
   }
 
-  // async find(id: string): Promise<Order> {
-  //   const orderModel = await OrderModel.findOne({ where: { id }, include: [{ association: "items" }] });
-  //   const orderItems = orderModel.items.map((item) => new OrderItem(item.id, item.name, item.price, item.product_id, item.quantity))
+  async find(id: string): Promise<Order> {
+    const orderModel = await OrderModel.findOne({ where: { id }, include: [{ association: "items" }] });
+    const orderItems = orderModel.items.map((item) => new OrderItem(item.id, item.name, item.price, item.product_id, item.quantity))
 
-  //   return new Order(orderModel.id, orderModel.customer_id, orderItems);
-  // }
+    return new Order(orderModel.id, orderModel.customer_id, orderItems);
+  }
 
   // async findAll(): Promise<Order[]> {
-  //   const orderModels = await OrderModel.findAll();
+  //   const orderModel = await OrderModel.findAll();
+  //   const orderItemModel = await OrderItemModel.findAll();
 
-  //   return orderModels.map((orderModel) =>
-  //     new Order(orderModel.id, orderModel.name, orderModel.price)
+  //   return orderModel.map((orderModel) =>
+  //     new Order(orderModel.id, orderModel.customer_id, orderItemModel.item)
   //   );
   // }
 }
