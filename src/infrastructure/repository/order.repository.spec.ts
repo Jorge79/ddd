@@ -149,4 +149,30 @@ describe("Order repository test", () => {
       total: order.total()
     });
   });
+
+  it("should find all orders", async () => {
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer("123", "Customer 1");
+    const address = new Address("Street 1", 1, "Zipcode 1", "City 1");
+    customer.changeAddress(address);
+    await customerRepository.create(customer);
+
+    const productRepository = new ProductRepository();
+    const product = new Product("123", "Product 1", 10);
+    await productRepository.create(product);
+
+    const orderItem = new OrderItem("1", product.name, product.price, product.id, 2);
+    const orderItem2 = new OrderItem("2", product.name, product.price, product.id, 2);
+
+    const orderRepository = new OrderRepository();
+    const order = new Order("1", "123", [orderItem]);
+    await orderRepository.create(order);
+    const order2 = new Order("2", "123", [orderItem2]);
+    await orderRepository.create(order2);
+
+    const foundOrders = await orderRepository.findAll();
+    const orders = [order, order2]
+
+    expect(foundOrders).toEqual(orders)
+  })
 })
