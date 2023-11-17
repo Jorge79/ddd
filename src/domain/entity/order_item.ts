@@ -42,8 +42,8 @@ export default class OrderItem {
     this._price = price
   }
 
-  changeQuantity(price: number) {
-    this._quantity = this.quantity
+  changeQuantity(quantity: number) {
+    this._quantity = quantity
   }
 
   orderItemTotal(): number {
