@@ -1,3 +1,6 @@
+import EventHandlerInterface from "./event-handler.interface";
+import eventInterface from "./event.interface";
+
 export default class EventDispatcher implements EventDispatcher {
   private eventHandlers: { [eventName: string]: EventHandlerInterface[] } = {};
 
@@ -25,12 +28,5 @@ export default class EventDispatcher implements EventDispatcher {
     this.eventHandlers = {};
   }
 
-  notify(event: eventInterface): void {
-    const eventName = event.constructor.name;
-    if (this.eventHandlers[eventName]) {
-      this.eventHandlers[eventName].forEach((eventHandler) => {
-        eventHandler.handle(event);
-      });
-    }
-  }
+  notify(event: eventInterface): void { }
 }
