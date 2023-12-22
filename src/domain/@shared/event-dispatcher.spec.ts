@@ -1,6 +1,5 @@
 import { Sequelize } from "sequelize-typescript"
 import CustomerModel from "../../infrastructure/db/sequelize/model/customer.model"
-import CustomerRepository from "../../infrastructure/repository/customer.repository"
 import Address from "../entity/address"
 import Customer from "../entity/customer"
 import CustomerCreatedEvent from "./customer-created.event"
@@ -8,6 +7,8 @@ import CreatedCustomerHandler from "./customer/handler/customer-created.handler"
 import EventDispatcher from "./event-dispatcher"
 import ProductCreatedEvent from "./product-created.event"
 import SendEmailWhenProductIsCreatedHandler from "./product/handler/send-email-when-product-is-created.handler"
+import EditedCustomerHandler from "./customer/handler/customer-address.handler"
+import CustomerEditedEvent from "./customer-edited.event"
 
 describe("Domain events tests", () => {
   let sequelize: Sequelize;
@@ -90,27 +91,42 @@ describe("Domain events tests", () => {
   it("should notify the createdcustomer handler", async () => {
     const eventDispatcher = new EventDispatcher();
     const eventHandler = new CreatedCustomerHandler();
-    const spyEventHandler = jest.spyOn(eventHandler, "EnviaConsoleLogHandler");
-
-    const customerRepository = new CustomerRepository();
-    const customer = new Customer("123", "Customer 1");
-    const address = new Address("Street 1", 1, "Zipcode 1", "City 1");
-    customer.Address = address;
-    await customerRepository.create(customer);
+    const spyEventHandler = jest.spyOn(eventHandler, "handle");
 
     eventDispatcher.register("CustomerCreatedEvent", eventHandler);
 
     expect(eventDispatcher.getEventHandlers["CustomerCreatedEvent"][0]).toMatchObject(eventHandler);
 
+    const customerCreatedEvent = new CustomerCreatedEvent({
+      id: "1",
+      name: "Customer 1",
+    });
+
+    eventDispatcher.notify(customerCreatedEvent);
+
+    expect(spyEventHandler).toHaveBeenCalled();
+  })
+
+  it("should notify the customer edited address handler", async () => {
+    const eventDispatcher = new EventDispatcher();
+    const eventHandler = new EditedCustomerHandler();
+    const spyEventHandler = jest.spyOn(eventHandler, "handle");
+    const customer = new Customer("123", "Customer 1");
+
+    eventDispatcher.register("CustomerEditedEvent", eventHandler);
+
+    expect(eventDispatcher.getEventHandlers["CustomerEditedEvent"][0]).toMatchObject(eventHandler);
+
     const newAddress = new Address("Street 2", 2, "Zipcode 2", "City 2")
 
     customer.changeAddress(newAddress)
 
-    const customerCreatedEvent = new CustomerCreatedEvent({
-      newAddress
+    const customerCreatedEvent = new CustomerEditedEvent({
+      id: "1",
+      name: "Customer 1",
+      Address: newAddress
     });
 
-    // Quando o notify for executado o CreatedCustomerHandler.EnviaConsoleLogHandler() é executado
     eventDispatcher.notify(customerCreatedEvent);
 
     expect(spyEventHandler).toHaveBeenCalled();
