@@ -3,7 +3,7 @@ import CustomerModel from "../../infrastructure/db/sequelize/model/customer.mode
 import Address from "../customer/value-object/address"
 import Customer from "../customer/entity/customer"
 import CustomerCreatedEvent from "./customer/handler/customer-created.event"
-import CreatedCustomerHandler from "./customer/handler/customer-created.handler"
+import CreatedCustomerHandler, { CreatedCustomerSecondHandler } from "./customer/handler/customer-created.handler"
 import EventDispatcher from "./event-dispatcher"
 import ProductCreatedEvent from "../product/event/product-created.event"
 import SendEmailWhenProductIsCreatedHandler from "../product/event/handler/send-email-when-product-is-created.handler"
@@ -88,14 +88,17 @@ describe("Domain events tests", () => {
     expect(spyEventHandler).toHaveBeenCalled();
   })
 
-  it("should notify the createdcustomer handler", async () => {
+  it("should notify the createdcustomer handlers", async () => {
     const eventDispatcher = new EventDispatcher();
     const eventHandler = new CreatedCustomerHandler();
+    const secondHandler = new CreatedCustomerSecondHandler();
     const spyEventHandler = jest.spyOn(eventHandler, "handle");
 
     eventDispatcher.register("CustomerCreatedEvent", eventHandler);
+    eventDispatcher.register("CustomerCreatedEvent", secondHandler);
 
     expect(eventDispatcher.getEventHandlers["CustomerCreatedEvent"][0]).toMatchObject(eventHandler);
+    expect(eventDispatcher.getEventHandlers["CustomerCreatedEvent"][1]).toMatchObject(secondHandler);
 
     const customerCreatedEvent = new CustomerCreatedEvent({
       id: "1",

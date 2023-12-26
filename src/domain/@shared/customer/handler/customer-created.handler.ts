@@ -7,3 +7,8 @@ export default class CreatedCustomerHandler implements EventHandlerInterface<Cus
     console.log("Esse é o primeiro console.log do evento: CustomerCreated");
   }
 }
+export class CreatedCustomerSecondHandler implements EventHandlerInterface<CustomerCreatedEvent> {
+  handle(event: EventInterface): void {
+    console.log("Esse é o segundo console.log do evento: CustomerCreated");
+  }
+}
