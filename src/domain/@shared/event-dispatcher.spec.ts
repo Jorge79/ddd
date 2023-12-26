@@ -1,14 +1,14 @@
 import { Sequelize } from "sequelize-typescript"
 import CustomerModel from "../../infrastructure/db/sequelize/model/customer.model"
-import Address from "../entity/address"
-import Customer from "../entity/customer"
-import CustomerCreatedEvent from "./customer-created.event"
+import Address from "../customer/value-object/address"
+import Customer from "../customer/entity/customer"
+import CustomerCreatedEvent from "./customer/handler/customer-created.event"
 import CreatedCustomerHandler from "./customer/handler/customer-created.handler"
 import EventDispatcher from "./event-dispatcher"
-import ProductCreatedEvent from "./product-created.event"
-import SendEmailWhenProductIsCreatedHandler from "./product/handler/send-email-when-product-is-created.handler"
+import ProductCreatedEvent from "../product/event/product-created.event"
+import SendEmailWhenProductIsCreatedHandler from "../product/event/handler/send-email-when-product-is-created.handler"
 import EditedCustomerHandler from "./customer/handler/customer-address.handler"
-import CustomerEditedEvent from "./customer-edited.event"
+import CustomerEditedEvent from "./customer/handler/customer-edited.event"
 
 describe("Domain events tests", () => {
   let sequelize: Sequelize;

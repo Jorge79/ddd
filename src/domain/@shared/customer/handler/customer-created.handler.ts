@@ -1,4 +1,4 @@
-import CustomerCreatedEvent from "../../customer-created.event";
+import CustomerCreatedEvent from "./customer-created.event";
 import EventHandlerInterface from "../../event-handler.interface";
 import EventInterface from "../../event.interface";
 
