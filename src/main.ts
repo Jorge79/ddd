@@ -1,4 +1,4 @@
-import Customer from "./domain/customer/entity/customer";
+import Customer from "./domain/@shared/customer/handler/customer";
 import Address from "./domain/customer/value-object/address";
 import OrderItem from "./domain/checkout/entity/order_item";
 import Order from "./domain/checkout/entity/order";

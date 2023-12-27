@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize-typescript"
 import CustomerModel from "../../infrastructure/db/sequelize/model/customer.model"
 import Address from "../customer/value-object/address"
-import Customer from "../customer/entity/customer"
+import Customer from "./customer/handler/customer"
 import CustomerCreatedEvent from "./customer/handler/customer-created.event"
 import CreatedCustomerHandler, { CreatedCustomerSecondHandler } from "./customer/handler/customer-created.handler"
 import EventDispatcher from "./event-dispatcher"
