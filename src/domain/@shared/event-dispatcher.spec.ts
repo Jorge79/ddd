@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize-typescript"
-import CustomerModel from "../../infrastructure/db/sequelize/model/customer.model"
+import CustomerModel from "../../infrastructure/customer/repository/sequelize/customer.model"
 import Address from "../customer/value-object/address"
 import Customer from "./customer/handler/customer"
 import CustomerCreatedEvent from "./customer/handler/customer-created.event"
