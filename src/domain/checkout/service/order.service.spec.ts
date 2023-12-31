@@ -1,4 +1,4 @@
-import Customer from "../../@shared/customer/handler/customer"
+import Customer from "../../customer/handler/customer"
 import Order from "../entity/order"
 import OrderItem from "../entity/order_item"
 import OrderService from "./order.service"

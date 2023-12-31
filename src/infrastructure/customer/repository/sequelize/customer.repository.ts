@@ -1,5 +1,5 @@
 import Address from "../../../../domain/customer/value-object/address";
-import Customer from "../../../../domain/@shared/customer/handler/customer";
+import Customer from "../../../../domain/customer/handler/customer";
 import CustomerRepositoryInterface from "../../../../domain/customer/repository/customer-repository.interface";
 import CustomerModel from "./customer.model";
 
